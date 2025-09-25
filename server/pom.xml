@@ -57,6 +57,12 @@
 			<artifactId>spring-boot-starter-data-r2dbc</artifactId>
 		</dependency>
 
+		<!-- JDBC Starter for SQL Initialization -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>
+
 		<!-- MySQL R2DBC (dev) -->
 		<dependency>
 			<groupId>dev.miku</groupId>

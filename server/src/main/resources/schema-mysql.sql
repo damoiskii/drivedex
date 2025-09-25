@@ -1,4 +1,4 @@
--- DriveDex Server Database Schema
+-- DriveDx Server Database Schema - MySQL Version
 -- This schema supports all model classes for the reactive Spring Boot server
 
 -- Drop existing tables in correct order (respecting foreign key constraints)
@@ -149,8 +149,3 @@ CREATE INDEX idx_pfb_passenger_id ON passenger_followed_buses(passenger_id);
 CREATE INDEX idx_pfb_bus_id ON passenger_followed_buses(bus_id);
 CREATE INDEX idx_rb_route_id ON route_buses(route_id);
 CREATE INDEX idx_rb_bus_id ON route_buses(bus_id);
-
--- Insert some sample data for testing (optional)
--- INSERT INTO routes (name, start_point, end_point, fare) VALUES 
--- ('Route A', 'Downtown Terminal', 'University Campus', 2.50),
--- ('Route B', 'Shopping Mall', 'Airport', 5.00);

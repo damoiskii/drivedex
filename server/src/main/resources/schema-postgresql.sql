@@ -1,4 +1,4 @@
--- DriveDex Server Database Schema
+-- DriveDex Server Database Schema - PostgreSQL Version
 -- This schema supports all model classes for the reactive Spring Boot server
 
 -- Drop existing tables in correct order (respecting foreign key constraints)
@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS users;
 
 -- Create users table (base table)
 CREATE TABLE users (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    id BIGSERIAL PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
     email VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
@@ -28,7 +28,7 @@ CREATE TABLE users (
 
 -- Create profiles table
 CREATE TABLE profiles (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    id BIGSERIAL PRIMARY KEY,
     photo_url VARCHAR(500),
     filename VARCHAR(255),
     date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -45,7 +45,7 @@ CREATE TABLE profiles (
 
 -- Create routes table
 CREATE TABLE routes (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    id BIGSERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     start_point VARCHAR(200) NOT NULL,
     end_point VARCHAR(200) NOT NULL,
@@ -56,7 +56,7 @@ CREATE TABLE routes (
 
 -- Create buses table
 CREATE TABLE buses (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    id BIGSERIAL PRIMARY KEY,
     license_plate VARCHAR(20) NOT NULL UNIQUE,
     bus_number INTEGER NOT NULL UNIQUE,
     driver_id BIGINT,
@@ -94,9 +94,9 @@ CREATE TABLE employees (
 
 -- Create locations table (GPS tracking for buses)
 CREATE TABLE locations (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    latitude DOUBLE NOT NULL,
-    longitude DOUBLE NOT NULL,
+    id BIGSERIAL PRIMARY KEY,
+    latitude DOUBLE PRECISION NOT NULL,
+    longitude DOUBLE PRECISION NOT NULL,
     place VARCHAR(255),
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     bus_id BIGINT NOT NULL,
@@ -108,7 +108,7 @@ CREATE TABLE locations (
 
 -- Create passenger_followed_buses table (many-to-many relationship)
 CREATE TABLE passenger_followed_buses (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    id BIGSERIAL PRIMARY KEY,
     passenger_id BIGINT NOT NULL,
     bus_id BIGINT NOT NULL,
     
@@ -119,7 +119,7 @@ CREATE TABLE passenger_followed_buses (
 
 -- Create route_buses table (many-to-many relationship)
 CREATE TABLE route_buses (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    id BIGSERIAL PRIMARY KEY,
     route_id BIGINT NOT NULL,
     bus_id BIGINT NOT NULL,
     
@@ -149,8 +149,3 @@ CREATE INDEX idx_pfb_passenger_id ON passenger_followed_buses(passenger_id);
 CREATE INDEX idx_pfb_bus_id ON passenger_followed_buses(bus_id);
 CREATE INDEX idx_rb_route_id ON route_buses(route_id);
 CREATE INDEX idx_rb_bus_id ON route_buses(bus_id);
-
--- Insert some sample data for testing (optional)
--- INSERT INTO routes (name, start_point, end_point, fare) VALUES 
--- ('Route A', 'Downtown Terminal', 'University Campus', 2.50),
--- ('Route B', 'Shopping Mall', 'Airport', 5.00);
