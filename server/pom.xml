@@ -12,7 +12,11 @@
 	<artifactId>server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>server</name>
-	<description>Demo project for Spring Boot</description>
+	<description>
+		This project will be developed for our Major Project implementation for our final year research project at the
+        University of Technology, Jamaica. This should satisfy a mini development for a Vehicle Tracking System for JUTC
+        Transport Operations.
+	</description>
 	<url/>
 
 	<licenses>
@@ -135,6 +139,41 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency> -->
+
+		<!-- To test the application with fake data -->
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+		 <!-- To be able to use ENV variables from .env files -->
+        <dependency>
+            <groupId>me.paulschwarz</groupId>
+            <artifactId>spring-dotenv</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+
+		 <!-- To help with converting location coordinates to the name of the area or region -->
+        <dependency>
+            <groupId>com.opencagedata</groupId>
+            <artifactId>jopencage</artifactId>
+            <version>2.2.0</version>
+        </dependency>
+
+		<!-- Will be used to set up cloudinary storage for posts and other content files -->
+        <!-- <dependency>
+            <groupId>com.cloudinary</groupId>
+            <artifactId>cloudinary-http44</artifactId>
+            <version>1.33.0</version>
+        </dependency> -->
+
+		<!-- https://mvnrepository.com/artifact/com.cloudinary/cloudinary-core -->
+		<dependency>
+			<groupId>com.cloudinary</groupId>
+			<artifactId>cloudinary-core</artifactId>
+			<version>2.3.2</version>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
