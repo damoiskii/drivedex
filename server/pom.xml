@@ -36,6 +36,8 @@
 
 	<properties>
 		<java.version>17</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<spring-boot-admin.version>3.5.0</spring-boot-admin.version>
 	</properties>
 
