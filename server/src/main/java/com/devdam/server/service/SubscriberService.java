@@ -6,7 +6,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface SubscriberService {
-
     Mono<Subscriber> saveSubscriberEmail(String email, SubscriberType type);
     Flux<Subscriber> informSubscribersByType(SubscriberType type, String subject, String content);
     Mono<Void> unsubscribeByCode(String unsubscribeCode);
