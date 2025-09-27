@@ -6,6 +6,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.devdam.server.enums.SubscriberType;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -18,7 +20,8 @@ public class Subscriber {
 
     private String email;
 
-    private String type;
+    @Builder.Default
+    private SubscriberType type = SubscriberType.NEWSLETTER;
 
     private Boolean isInformed;
 

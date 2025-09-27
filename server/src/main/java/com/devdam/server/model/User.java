@@ -6,7 +6,7 @@ package com.devdam.server.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
-import com.devdam.server.enums.RoleEnum;
+import com.devdam.server.enums.Role;
 
 import lombok.Builder;
 import lombok.Data;
@@ -27,5 +27,5 @@ public class User {
     protected Boolean isActive = false;
 
     @Builder.Default
-    protected RoleEnum role = RoleEnum.USER;
+    protected Role role = Role.USER;
 }

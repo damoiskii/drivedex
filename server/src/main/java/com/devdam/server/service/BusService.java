@@ -8,8 +8,8 @@ import com.devdam.server.model.Bus;
 import reactor.core.publisher.Mono;
 
 public interface BusService {
-    public Mono<Page<Bus>> getBusesByBusNumber(Integer busNumber, Pageable pageable);
-    public Mono<Page<Bus>> getPassengerFollowedBusesWithFilters(
+    Mono<Page<Bus>> getBusesByBusNumber(Integer busNumber, Pageable pageable);
+    Mono<Page<Bus>> getPassengerFollowedBusesWithFilters(
             Long passengerId,
             String licensePlate,
             Integer busNumber,

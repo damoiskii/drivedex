@@ -1,9 +1,10 @@
 package com.devdam.server.enums;
 
-public enum RoleEnum {
+public enum Role {
     USER,
 	PASSENGER,
     EMPLOYEE,
     DRIVER,
-    ADMIN
+    ADMIN, 
+    SIMULATOR
 }

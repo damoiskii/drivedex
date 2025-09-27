@@ -20,6 +20,5 @@ public class Bus {
     private Long driverId;
     private Long passengerId;
     private Long routeId;
-
-    // private Location location;    
+    // private Long locationId;    
 }
