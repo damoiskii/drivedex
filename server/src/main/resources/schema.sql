@@ -2,6 +2,7 @@
 -- This schema supports all model classes for the reactive Spring Boot server
 
 -- Drop existing tables in correct order (respecting foreign key constraints)
+DROP TABLE IF EXISTS subscribers;
 DROP TABLE IF EXISTS passenger_followed_buses;
 DROP TABLE IF EXISTS route_buses;
 DROP TABLE IF EXISTS locations;
@@ -128,6 +129,19 @@ CREATE TABLE route_buses (
     CONSTRAINT uk_route_bus UNIQUE (route_id, bus_id)
 );
 
+-- Create subscribers table
+CREATE TABLE subscribers (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    email VARCHAR(100) NOT NULL,
+    type VARCHAR(50),
+    is_informed BOOLEAN DEFAULT FALSE,
+    unsubscribe_code VARCHAR(255),
+    date_subscribed TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    
+    CONSTRAINT uk_subscriber_email_type UNIQUE (email, type),
+    CONSTRAINT chk_email_format CHECK (email LIKE '%_@%_._%')
+);
+
 -- Add foreign key constraint from users to profiles (circular reference)
 ALTER TABLE users ADD CONSTRAINT fk_user_profile FOREIGN KEY (profile_id) REFERENCES profiles(id) ON DELETE SET NULL;
 
@@ -149,6 +163,9 @@ CREATE INDEX idx_pfb_passenger_id ON passenger_followed_buses(passenger_id);
 CREATE INDEX idx_pfb_bus_id ON passenger_followed_buses(bus_id);
 CREATE INDEX idx_rb_route_id ON route_buses(route_id);
 CREATE INDEX idx_rb_bus_id ON route_buses(bus_id);
+CREATE INDEX idx_subscribers_email ON subscribers(email);
+CREATE INDEX idx_subscribers_type ON subscribers(type);
+CREATE INDEX idx_subscribers_date_subscribed ON subscribers(date_subscribed);
 
 -- Insert some sample data for testing (optional)
 -- INSERT INTO routes (name, start_point, end_point, fare) VALUES 

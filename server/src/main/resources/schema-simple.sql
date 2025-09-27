@@ -1,4 +1,4 @@
--- DriveDex Server Database Schema - Simplified MySQL Version
+-- DriveDx Server Database Schema - Simplified MySQL Version
 -- This schema supports all model classes for the reactive Spring Boot server
 -- Simplified to avoid R2DBC initialization issues
 
@@ -91,6 +91,17 @@ CREATE TABLE IF NOT EXISTS route_buses (
     UNIQUE (route_id, bus_id)
 );
 
+-- Create subscribers table
+CREATE TABLE IF NOT EXISTS subscribers (
+    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(100) NOT NULL,
+    type VARCHAR(50),
+    is_informed BOOLEAN DEFAULT FALSE,
+    unsubscribe_code VARCHAR(255),
+    date_subscribed TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE (email, type)
+);
+
 -- Create indexes for better performance
 CREATE INDEX IF NOT EXISTS idx_users_username ON users(username);
 CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
@@ -105,3 +116,6 @@ CREATE INDEX IF NOT EXISTS idx_pfb_passenger_id ON passenger_followed_buses(pass
 CREATE INDEX IF NOT EXISTS idx_pfb_bus_id ON passenger_followed_buses(bus_id);
 CREATE INDEX IF NOT EXISTS idx_rb_route_id ON route_buses(route_id);
 CREATE INDEX IF NOT EXISTS idx_rb_bus_id ON route_buses(bus_id);
+CREATE INDEX IF NOT EXISTS idx_subscribers_email ON subscribers(email);
+CREATE INDEX IF NOT EXISTS idx_subscribers_type ON subscribers(type);
+CREATE INDEX IF NOT EXISTS idx_subscribers_date_subscribed ON subscribers(date_subscribed);
