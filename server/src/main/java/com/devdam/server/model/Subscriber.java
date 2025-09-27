@@ -24,7 +24,6 @@ public class Subscriber {
     private SubscriberType type = SubscriberType.NEWSLETTER;
 
     private Boolean isInformed;
-
     private String unsubscribeCode;
 
     @DateTimeFormat(pattern = "MM-dd-yyyy HH:mm:ss")
