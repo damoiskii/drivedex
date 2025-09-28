@@ -1,6 +1,6 @@
 package com.devdam.server.enums;
 
-public enum Role {
+public enum RoleType {
     USER,
     MODERATOR,
     EDITOR,
