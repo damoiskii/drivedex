@@ -15,6 +15,6 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "drivers")
 @PrimaryKeyJoinColumn(name = "id")
 public class Driver extends User {
-    @OneToOne(mappedBy = "driver")
+    @OneToOne()
     private Bus bus;
 }
