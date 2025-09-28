@@ -58,7 +58,7 @@ public class SubscriberServiceImpl implements SubscriberService {
 
     @Override
     public Mono<Boolean> existsByUnsubscribeCode(String unsubscribeCode) {
-        return subscriberRepository.existsByUnsubscribeCodeEqualsIgnoreCase(unsubscribeCode);
+        return subscriberRepository.existsByUnsubscribeCodeEquals(unsubscribeCode);
     }
 
     @Override
