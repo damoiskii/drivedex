@@ -18,5 +18,7 @@ public interface FakerService {
     void assignBusesToRoutes();
     void assignPassengersToFollowBuses();
 
+    void generateAppSettings(int amount);
+
     void clearAllData();
 }

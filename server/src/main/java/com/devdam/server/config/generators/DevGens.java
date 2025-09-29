@@ -47,5 +47,7 @@ public class DevGens implements TaskRunner {
         fakerService.generateRoutes(50);
         fakerService.assignBusesToRoutes();
         fakerService.assignPassengersToFollowBuses();
+
+        fakerService.generateAppSettings(20);
     }
 }

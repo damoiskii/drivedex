@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.devdam.server.enums.SubscriberType;
 import com.devdam.server.model.Action;
+import com.devdam.server.model.AppSetting;
 import com.devdam.server.model.Bus;
 import com.devdam.server.model.Driver;
 import com.devdam.server.model.Employee;
@@ -21,6 +22,7 @@ import com.devdam.server.model.Route;
 import com.devdam.server.model.Subscriber;
 import com.devdam.server.model.User;
 import com.devdam.server.repository.ActionRepository;
+import com.devdam.server.repository.AppSettingRepository;
 import com.devdam.server.repository.BusRepository;
 import com.devdam.server.repository.DriverRepository;
 import com.devdam.server.repository.EmployeeRepository;
@@ -55,6 +57,7 @@ public class FakerServiceImpl implements FakerService {
     private final BusRepository busRepository;
     private final LocationRepository locationRepository;
     private final RouteRepository routeRepository;
+    private final AppSettingRepository appSettingRepository;
 
     private Set<Role> getRandomRoles() {
         Set<Role> roles = new HashSet<>();
@@ -568,6 +571,40 @@ public class FakerServiceImpl implements FakerService {
         busRepository.saveAll(allBuses);
         passengerRepository.saveAll(allPassengers);
         log.info("Passenger assignment to buses completed!");
+    }
+
+    @Override
+    public void generateAppSettings(int amount) {
+        // Check if app settings already exist
+        if (appSettingRepository.count() > 0) {
+            log.info("App settings already exist in the database. Skipping generation.");
+            return;
+        }
+
+        log.info("Generating application settings...");
+        List<AppSetting> settings = new ArrayList<>();
+        Set<String> generatedNames = new HashSet<>();
+        StringBuffer sb = new StringBuffer();
+
+        for (int i = 0; i < amount; i++) {
+            // Ensure unique setting names
+            sb.append(faker.app().name());
+
+            // Skip duplicates
+            if (generatedNames.contains(sb.toString().toLowerCase())) continue;
+
+            settings.add(AppSetting.builder()
+                .name(sb.toString())
+                .turnedOn(faker.bool().bool())
+                .build()
+            );
+
+            generatedNames.add(sb.toString().toLowerCase());
+            sb.setLength(0); // Clear the StringBuffer for the next iteration
+        }
+
+        appSettingRepository.saveAll(settings);
+        log.info("Application settings generation completed.");
     }
 
     @Override
