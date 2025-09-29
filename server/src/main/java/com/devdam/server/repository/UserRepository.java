@@ -18,4 +18,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findAllByIsActiveIsTrue();
     List<User> findAllByIsActiveIsFalse();
     List<User> findAllByIsActiveIsTrueAndIsStaffIsFalse(); // Get all online passengers
+
+    Long countByIsSuperuserIsTrue();
 }

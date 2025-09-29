@@ -19,7 +19,9 @@ public class DevGens implements TaskRunner {
     public void runTasks() {
         // Implement development-specific tasks here
         log.info("Running development-specific tasks...");
+
         generateFakeData();
+
         log.info("Development-specific tasks completed.");
     }
     
