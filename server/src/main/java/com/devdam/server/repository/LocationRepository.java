@@ -9,5 +9,5 @@ import com.devdam.server.model.Location;
 
 @Repository
 public interface LocationRepository extends JpaRepository<Location, Long> {
-    Page<Location> findAllByBusDriverFirstnameContainsIgnoringCaseOrBusDriverLastnameContainsIgnoringCaseOrBusDriverUsernameContainsIgnoringCaseOrBusDriverEmailContainsIgnoringCaseOrBusBusNumberContainsIgnoringCaseOrBusLicensePlateContainsIgnoringCaseOrPlaceContainsIgnoringCase(String firstname, String lastname, String username, String email, String busNumber, String licensePlate, String place, Pageable pageable);
+    Page<Location> findAllByBus_Driver_Profile_FirstnameContainsIgnoringCaseOrBus_Driver_Profile_LastnameContainsIgnoringCaseOrBusDriverUsernameContainsIgnoringCaseOrBusDriverEmailContainsIgnoringCaseOrBusBusNumberContainsIgnoringCaseOrBusLicensePlateContainsIgnoringCaseOrPlaceContainsIgnoringCase(String firstname, String lastname, String username, String email, String busNumber, String licensePlate, String place, Pageable pageable);
 }

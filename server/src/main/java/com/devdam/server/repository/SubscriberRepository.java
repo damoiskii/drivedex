@@ -14,5 +14,5 @@ public interface SubscriberRepository extends JpaRepository<Subscriber, Long> {
     Subscriber findByEmailEqualsIgnoreCase(String email);
     Subscriber findByUnsubscribeCodeEqualsIgnoreCase(String code);
 
-    List<Subscriber> findAllByTypeEqualsIgnoreCaseOrderByTypeAsc(SubscriberType type);
+    List<Subscriber> findAllByTypeEqualsOrderByTypeAsc(SubscriberType type);
 }

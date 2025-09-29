@@ -19,11 +19,11 @@ public interface BusRepository extends JpaRepository<Bus, Long> {
     Page<Bus> findAllByPassengerIdEqualsAndLicensePlateContainsIgnoringCaseOrPassengerIdEqualsAndBusNumberEqualsOrPassengerIdEqualsAndLocationPlaceContainsIgnoringCaseOrPassengerIdEqualsAndRouteNameContainsIgnoringCase(Long passengerId, String licensePlate, Long passengerId2, Integer busNumber, Long passengerId3, String locationPlace, Long passengerId4, String routeName, Pageable pageable);
     List<Bus> findAllByPassengerIdEquals(Long passengerId, Sort sort);
     Page<Bus> findAllByPassengerIdEquals(Long passengerId, Pageable pageable);
-    Page<Bus> findAllByDriverFirstnameContainsIgnoringCaseOrDriverLastnameContainsIgnoringCaseOrDriverUsernameContainsIgnoringCaseOrDriverEmailContainsIgnoringCaseOrLicensePlateContainsIgnoringCaseOrBusNumberGreaterThanEqualOrLocationPlaceContainsIgnoringCaseOrRouteNameContainsIgnoringCase(String firstname, String lastname, String username, String email, String licensePlate, Integer busNumber, String place, String route, Pageable pageable);
+    Page<Bus> findAllByDriver_Profile_FirstnameContainsIgnoringCaseOrDriver_Profile_LastnameContainsIgnoringCaseOrDriverUsernameContainsIgnoringCaseOrDriverEmailContainsIgnoringCaseOrLicensePlateContainsIgnoringCaseOrBusNumberGreaterThanEqualOrLocationPlaceContainsIgnoringCaseOrRouteNameContainsIgnoringCase(String firstname, String lastname, String username, String email, String licensePlate, Integer busNumber, String place, String route, Pageable pageable);
     Page<Bus> findAllByLicensePlateContainsIgnoringCaseOrBusNumberEqualsOrLocationPlaceContainsIgnoringCaseOrRouteNameContainsIgnoringCase(String licensePlate, Integer busNumber, String place, String route, Pageable pageable);
 
     List<Bus> findAllByDriverIsNullOrderByBusNumberAsc(); // using for the add employee (driver) form
-    List<Bus> findAllByDriverIsNullOrDriverIdEquals(Long driver_id); // using for the update employee (driver) form
+    List<Bus> findAllByDriverIsNullOrDriverIdEquals(Long driverId); // using for the update employee (driver) form
     List<Bus> findAllByPassengerId(Long passengerId);
 
     Page<Bus> findAllByPassengerId(Long passengerId, Pageable pageable);

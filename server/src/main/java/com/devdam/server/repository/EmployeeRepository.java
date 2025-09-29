@@ -14,26 +14,26 @@ import java.util.List;
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     Employee findByUsernameEqualsIgnoringCase(String username);
     Employee findByEmailEqualsIgnoringCase(String email);
-    Employee findByEmailEqualsIgnoringCaseAndIsAdminIsFalseAndIsDriverIsTrue(String email);
+    Employee findByEmailEqualsIgnoringCaseOrUsernameEqualsIgnoringCase(String email, String username);
 
-    List<Employee> findByFirstnameEqualsIgnoringCaseAndLastnameEqualsIgnoringCaseOrderByFirstnameAscLastnameAscUsernameAscEmailAsc(String firstname, String lastname);
-    List<Employee> findAllByIsAdminIsTrueOrderByFirstnameAscLastnameAscUsernameAscEmailAsc();
-    List<Employee> findAllByIsSupervisorIsTrueOrderByFirstnameAscLastnameAscUsernameAscEmailAsc();
-    List<Employee> findAllByIsAdminIsFalseAndIsDriverIsTrueOrderByFirstnameAscLastnameAscUsernameAscEmailAsc();
-    List<Employee> findAllByIsSuperuserIsTrueOrderByFirstnameAscLastnameAscUsernameAscEmailAsc();
+    List<Employee> findByProfile_FirstnameEqualsIgnoringCaseAndProfile_LastnameEqualsIgnoringCaseOrderByProfile_FirstnameAscProfile_LastnameAscUsernameAscEmailAsc(String firstname, String lastname);
+    // List<Employee> findAllByIsAdminIsTrueOrderByProfile_FirstnameAscProfile_LastnameAscUsernameAscEmailAsc();
+    // List<Employee> findAllByIsSupervisorIsTrueOrderByProfile_FirstnameAscProfile_LastnameAscUsernameAscEmailAsc();
+    // List<Employee> findAllByIsAdminIsFalseAndIsDriverIsTrueOrderByProfile_FirstnameAscProfile_LastnameAscUsernameAscEmailAsc();
+    // List<Employee> findAllByIsSuperuserIsTrueOrderByProfile_FirstnameAscProfile_LastnameAscUsernameAscEmailAsc();
 
-    List<Employee> findAllByIsDriverIsTrue();
+    // List<Employee> findAllByIsDriverIsTrue();
 
     // Pagination
-    Page<Employee> findAllByIsAdminIsTrue(Pageable pageable);
-    Page<Employee> findAllByIsSupervisorIsTrue(Pageable pageable);
-    Page<Employee> findAllByIsAdminIsFalseAndIsDriverIsTrue(Pageable pageable);
+    // Page<Employee> findAllByIsAdminIsTrue(Pageable pageable);
+    // Page<Employee> findAllByIsSupervisorIsTrue(Pageable pageable);
+    // Page<Employee> findAllByIsAdminIsFalseAndIsDriverIsTrue(Pageable pageable);
 
-    Page<Employee> findAllByFirstnameContainsIgnoringCaseOrLastnameContainsIgnoringCaseOrUsernameContainsIgnoringCaseOrEmailContainsIgnoringCase(String firstname, String lastname, String username, String email, Pageable pageable);
-    Page<Employee> findAllByIsAdmin(boolean isAdmin, Pageable pageable);
-    Page<Employee> findAllByIsDriver(boolean isDriver, Pageable pageable);
+    Page<Employee> findAllByProfile_FirstnameContainsIgnoringCaseOrProfile_LastnameContainsIgnoringCaseOrUsernameContainsIgnoringCaseOrEmailContainsIgnoringCase(String firstname, String lastname, String username, String email, Pageable pageable);
+    // Page<Employee> findAllByIsAdmin(boolean isAdmin, Pageable pageable);
+    // Page<Employee> findAllByIsDriver(boolean isDriver, Pageable pageable);
     Page<Employee> findAllByIsRegular(boolean isRegular, Pageable pageable);
-    Page<Employee> findAllByIsSupervisor(boolean isSupervisor, Pageable pageable);
+    // Page<Employee> findAllByIsSupervisor(boolean isSupervisor, Pageable pageable);
     Page<Employee> findAllByIsActive(boolean isActive, Pageable pageable);
 
     Page<Employee> findAllByRolesIsContaining(Role role, Pageable pageable);

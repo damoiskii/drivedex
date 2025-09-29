@@ -16,10 +16,10 @@ public interface PassengerRepository extends JpaRepository<Passenger, Long> {
     Passenger findByUsernameEqualsIgnoringCase(String username);
     Passenger findByEmailEqualsIgnoringCase(String email);
 
-    List<Passenger> findByFirstnameEqualsIgnoringCaseAndLastnameEqualsIgnoringCase(String firstname, String lastname);
+    List<Passenger> findByProfile_FirstnameEqualsIgnoringCaseAndProfile_LastnameEqualsIgnoringCase(String firstname, String lastname);
 
-    Page<Passenger> findAllByFirstnameContainsIgnoringCaseOrLastnameContainsIgnoringCaseOrUsernameContainsIgnoringCaseOrEmailContainsIgnoringCase(String firstname, String lastname, String username, String email, Pageable pageable);
-    Page<Passenger> findAllByIsStaff(boolean isStaff, Pageable pageable);
+    Page<Passenger> findAllByProfile_FirstnameContainsIgnoringCaseOrProfile_LastnameContainsIgnoringCaseOrUsernameContainsIgnoringCaseOrEmailContainsIgnoringCase(String firstname, String lastname, String username, String email, Pageable pageable);
+    // Page<Passenger> findAllByIsStaff(boolean isStaff, Pageable pageable);
     Page<Passenger> findAllByIsActive(boolean isActive, Pageable pageable);
 
     Page<Passenger> findAllByRolesIsContaining(Role role, Pageable pageable);
