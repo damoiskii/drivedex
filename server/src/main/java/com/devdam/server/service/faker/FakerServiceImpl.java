@@ -1,4 +1,4 @@
-package com.devdam.server.service;
+package com.devdam.server.service.faker;
 
 import java.util.ArrayList;
 import java.util.HashSet;

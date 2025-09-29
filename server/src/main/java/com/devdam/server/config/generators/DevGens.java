@@ -3,7 +3,7 @@ package com.devdam.server.config.generators;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import com.devdam.server.service.FakerServiceImpl;
+import com.devdam.server.service.faker.FakerService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 public class DevGens implements TaskRunner {
-    private final FakerServiceImpl fakerService;
+    private final FakerService fakerService;
 
     @Override
     public void runTasks() {

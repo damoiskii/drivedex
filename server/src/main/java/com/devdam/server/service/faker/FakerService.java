@@ -1,4 +1,4 @@
-package com.devdam.server.service;
+package com.devdam.server.service.faker;
 
 public interface FakerService {
     void generateRoles(int amount);
