@@ -20,6 +20,7 @@ public class DevGens implements TaskRunner {
         // Implement development-specific tasks here
         log.info("Running development-specific tasks...");
         generateFakeData();
+        log.info("Development-specific tasks completed.");
     }
     
     private void generateFakeData() {

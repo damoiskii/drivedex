@@ -229,7 +229,7 @@ public class FakerServiceImpl implements FakerService {
     }
 
     @Override
-     public void generateAdministrators(int amount) {
+    public void generateAdministrators(int amount) {
         if (userRepository.count() > 0) {
             log.info("Users already exist. Skipping generation.");
             return;
@@ -561,8 +561,7 @@ public class FakerServiceImpl implements FakerService {
             // Ensure uniqueness
             passenger.setFollowedBuses(new HashSet<>(followedBuses));
 
-            // passenger.getFollowedBuses().add(randomBus);
-            //randomBus.setPassenger(passenger);
+            // randomBus.setPassenger(passenger);
             randomBus.getPassengers().add(passenger);
         }
 
