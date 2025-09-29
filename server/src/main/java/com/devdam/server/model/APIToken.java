@@ -9,6 +9,8 @@
 // import org.springframework.format.annotation.DateTimeFormat;
 
 // @Data
+// @NoArgsConstructor
+// @AllArgsConstructor
 // @Builder
 // @Entity
 // @Table(name = "api_tokens")

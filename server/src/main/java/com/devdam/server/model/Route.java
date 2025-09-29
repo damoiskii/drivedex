@@ -7,6 +7,8 @@ import java.util.Set;
 import java.util.HashSet;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Entity
 @Table(name = "routes")

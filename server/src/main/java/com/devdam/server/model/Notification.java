@@ -11,6 +11,8 @@ import com.devdam.server.enums.NotificationType;
 import java.time.LocalDateTime;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Entity
 @Table(name = "notifications")

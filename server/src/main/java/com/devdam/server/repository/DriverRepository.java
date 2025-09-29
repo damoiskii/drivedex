@@ -37,4 +37,6 @@ public interface DriverRepository extends JpaRepository<Driver, Long> {
     Page<Driver> findAllByIsActive(boolean isActive, Pageable pageable);
 
     // Page<Driver> findAllByRolesIsContaining(Role role, Pageable pageable);
+
+    List<Driver> findAllByBusIsNull();
 }

@@ -9,6 +9,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @ToString(exclude = "bus")
 // @EqualsAndHashCode(exclude = "bus")
