@@ -12,6 +12,10 @@ export default defineConfig({
   ],
   server: {
     port: 3000,
+    // host: true,
+    // strictPort: true,
+    // watch: { usePolling: true },
+    // cors: true,
   },
   resolve: {
     alias: {
