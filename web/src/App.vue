@@ -1,101 +1,16 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { RouterView } from 'vue-router'
 </script>
 
 <template>
-  <header class="p-4 shadow-md" style="background-color: #181818">
-    <img
-      alt="Vue logo"
-      class="logo mx-auto mb-8"
-      src="@/assets/logo.svg"
-      width="125"
-      height="125"
-    />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav class="flex justify-center space-x-4 mt-4">
-        <RouterLink
-          to="/"
-          class="px-4 py-2 text-blue-600 hover:text-blue-800 hover:bg-blue-100 rounded transition-colors"
-          >Home
-        </RouterLink>
-        <RouterLink
-          to="/about"
-          class="px-4 py-2 text-blue-600 hover:text-blue-800 hover:bg-blue-100 rounded transition-colors"
-          >About
-        </RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <main class="container mx-auto p-8">
-    <RouterView />
-  </main>
+  <RouterView />
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
+<style>
+#app {
   width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+  height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 </style>
