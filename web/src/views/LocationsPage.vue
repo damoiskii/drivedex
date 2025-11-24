@@ -4,6 +4,10 @@
         <Toast :show="toast.show" :type="toast.type" :message="toast.message" :description="toast.description"
             @close="toast.show = false" />
 
+        <!-- Delete Confirmation Modal -->
+        <DeleteModal :show="deleteModal.show" :title="deleteModal.title" :message="deleteModal.message"
+            :itemName="deleteModal.itemName" @confirm="confirmDelete" @cancel="cancelDelete" />
+
         <!-- Header -->
         <div class="mb-6">
             <h1 class="text-3xl font-bold text-gray-800">Locations</h1>
@@ -245,6 +249,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import Toast from '../components/Toast.vue'
+import DeleteModal from '../components/DeleteModal.vue'
 
 const searchQuery = ref('')
 const loading = ref(false)
@@ -253,6 +258,14 @@ const toast = ref({
     type: 'info',
     message: '',
     description: ''
+})
+
+const deleteModal = ref({
+    show: false,
+    title: 'Delete Location',
+    message: 'Are you sure you want to delete this location? This will affect all routes that use this stop.',
+    itemName: '',
+    locationToDelete: null
 })
 
 const locations = ref([
@@ -351,13 +364,25 @@ const editLocation = (location) => {
 }
 
 const deleteLocation = (location) => {
-    if (confirm(`Are you sure you want to delete ${location.name}?`)) {
-        const index = locations.value.findIndex(l => l.id === location.id)
-        if (index > -1) {
-            locations.value.splice(index, 1)
-            showToast('success', 'Location deleted', `${location.name} has been removed`)
-        }
+    deleteModal.value.show = true
+    deleteModal.value.itemName = location.name
+    deleteModal.value.locationToDelete = location
+}
+
+const confirmDelete = () => {
+    const location = deleteModal.value.locationToDelete
+    const index = locations.value.findIndex(l => l.id === location.id)
+    if (index > -1) {
+        locations.value.splice(index, 1)
+        showToast('success', 'Location deleted', `${location.name} has been removed`)
     }
+    deleteModal.value.show = false
+    deleteModal.value.locationToDelete = null
+}
+
+const cancelDelete = () => {
+    deleteModal.value.show = false
+    deleteModal.value.locationToDelete = null
 }
 
 onMounted(() => {

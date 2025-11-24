@@ -4,6 +4,10 @@
         <Toast :show="toast.show" :type="toast.type" :message="toast.message" :description="toast.description"
             @close="toast.show = false" />
 
+        <!-- Delete Confirmation Modal -->
+        <DeleteModal :show="deleteModal.show" :title="deleteModal.title" :message="deleteModal.message"
+            :itemName="deleteModal.itemName" @confirm="confirmDelete" @cancel="cancelDelete" />
+
         <!-- Header -->
         <div class="mb-6">
             <h1 class="text-3xl font-bold text-gray-800">All Buses</h1>
@@ -230,6 +234,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import Toast from '../components/Toast.vue'
+import DeleteModal from '../components/DeleteModal.vue'
 
 const searchQuery = ref('')
 const loading = ref(false)
@@ -238,6 +243,14 @@ const toast = ref({
     type: 'info',
     message: '',
     description: ''
+})
+
+const deleteModal = ref({
+    show: false,
+    title: 'Delete Bus',
+    message: 'Are you sure you want to delete this bus? This will remove it from the fleet and all associated records.',
+    itemName: '',
+    busToDelete: null
 })
 
 const buses = ref([
@@ -365,13 +378,25 @@ const editBus = (bus) => {
 }
 
 const deleteBus = (bus) => {
-    if (confirm(`Are you sure you want to delete ${bus.name}?`)) {
-        const index = buses.value.findIndex(b => b.id === bus.id)
-        if (index > -1) {
-            buses.value.splice(index, 1)
-            showToast('success', 'Bus deleted', `${bus.name} has been removed from the fleet`)
-        }
+    deleteModal.value.show = true
+    deleteModal.value.itemName = bus.name
+    deleteModal.value.busToDelete = bus
+}
+
+const confirmDelete = () => {
+    const bus = deleteModal.value.busToDelete
+    const index = buses.value.findIndex(b => b.id === bus.id)
+    if (index > -1) {
+        buses.value.splice(index, 1)
+        showToast('success', 'Bus deleted', `${bus.name} has been removed from the fleet`)
     }
+    deleteModal.value.show = false
+    deleteModal.value.busToDelete = null
+}
+
+const cancelDelete = () => {
+    deleteModal.value.show = false
+    deleteModal.value.busToDelete = null
 }
 
 onMounted(() => {

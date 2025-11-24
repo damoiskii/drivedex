@@ -158,10 +158,7 @@
                             class="hover:bg-gray-50 transition-colors">
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
-                                    <div
-                                        class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 font-semibold">
-                                        {{ employee.name.charAt(0) }}
-                                    </div>
+                                    <UserAvatar :name="employee.name" size="md" color="indigo" />
                                     <div class="ml-4">
                                         <div class="text-sm font-medium text-gray-900">{{ employee.name }}</div>
                                         <div class="text-sm text-gray-500">ID: {{ employee.id }}</div>
@@ -217,6 +214,7 @@
 import { ref, computed, onMounted } from 'vue'
 import Toast from '../components/Toast.vue'
 import DeleteModal from '../components/DeleteModal.vue'
+import UserAvatar from '../components/UserAvatar.vue'
 
 const searchQuery = ref('')
 const loading = ref(false)

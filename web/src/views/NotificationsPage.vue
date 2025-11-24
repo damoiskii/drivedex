@@ -4,6 +4,10 @@
         <Toast :show="toast.show" :type="toast.type" :message="toast.message" :description="toast.description"
             @close="toast.show = false" />
 
+        <!-- Delete Confirmation Modal -->
+        <DeleteModal :show="deleteModal.show" :title="deleteModal.title" :message="deleteModal.message"
+            :itemName="deleteModal.itemName" @confirm="confirmDelete" @cancel="cancelDelete" />
+
         <!-- Header -->
         <div class="mb-6">
             <h1 class="text-3xl font-bold text-gray-800">Notifications</h1>
@@ -120,6 +124,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import Toast from '../components/Toast.vue'
+import DeleteModal from '../components/DeleteModal.vue'
 
 const filterType = ref('all')
 const toast = ref({
@@ -127,6 +132,14 @@ const toast = ref({
     type: 'info',
     message: '',
     description: ''
+})
+
+const deleteModal = ref({
+    show: false,
+    title: 'Clear All Notifications',
+    message: 'Are you sure you want to clear all notifications? This will permanently remove all notifications from your inbox.',
+    itemName: '',
+    action: null
 })
 
 const notifications = ref([
@@ -230,11 +243,24 @@ const deleteNotification = (notification) => {
 }
 
 const clearAll = () => {
-    if (confirm('Are you sure you want to clear all notifications?')) {
+    deleteModal.value.show = true
+    deleteModal.value.itemName = `${notifications.value.length} notifications`
+    deleteModal.value.action = 'clearAll'
+}
+
+const confirmDelete = () => {
+    if (deleteModal.value.action === 'clearAll') {
         const count = notifications.value.length
         notifications.value = []
         showToast('success', 'All notifications cleared', `${count} notifications deleted`)
     }
+    deleteModal.value.show = false
+    deleteModal.value.action = null
+}
+
+const cancelDelete = () => {
+    deleteModal.value.show = false
+    deleteModal.value.action = null
 }
 
 onMounted(() => {

@@ -4,6 +4,10 @@
         <Toast :show="toast.show" :type="toast.type" :message="toast.message" :description="toast.description"
             @close="toast.show = false" />
 
+        <!-- Delete Confirmation Modal -->
+        <DeleteModal :show="deleteModal.show" :title="deleteModal.title" :message="deleteModal.message"
+            :itemName="deleteModal.itemName" @confirm="confirmDelete" @cancel="cancelDelete" />
+
         <!-- Header -->
         <div class="mb-6">
             <h1 class="text-3xl font-bold text-gray-800">Drivers</h1>
@@ -153,10 +157,7 @@
                             class="hover:bg-gray-50 transition-colors">
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
-                                    <div
-                                        class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 font-semibold">
-                                        {{ driver.name.charAt(0) }}
-                                    </div>
+                                    <UserAvatar :name="driver.name" size="md" color="indigo" />
                                     <div class="ml-4">
                                         <div class="text-sm font-medium text-gray-900">{{ driver.name }}</div>
                                         <div class="text-sm text-gray-500">{{ driver.phone }}</div>
@@ -217,6 +218,8 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import Toast from '../components/Toast.vue'
+import DeleteModal from '../components/DeleteModal.vue'
+import UserAvatar from '../components/UserAvatar.vue'
 
 const searchQuery = ref('')
 const loading = ref(false)
@@ -225,6 +228,14 @@ const toast = ref({
     type: 'info',
     message: '',
     description: ''
+})
+
+const deleteModal = ref({
+    show: false,
+    title: 'Delete Driver',
+    message: 'Are you sure you want to delete this driver? This will remove their profile and unassign them from any buses.',
+    itemName: '',
+    driverToDelete: null
 })
 
 const drivers = ref([
@@ -319,13 +330,25 @@ const editDriver = (driver) => {
 }
 
 const deleteDriver = (driver) => {
-    if (confirm(`Are you sure you want to delete ${driver.name}?`)) {
-        const index = drivers.value.findIndex(d => d.id === driver.id)
-        if (index > -1) {
-            drivers.value.splice(index, 1)
-            showToast('success', 'Driver deleted', `${driver.name} has been removed`)
-        }
+    deleteModal.value.show = true
+    deleteModal.value.itemName = driver.name
+    deleteModal.value.driverToDelete = driver
+}
+
+const confirmDelete = () => {
+    const driver = deleteModal.value.driverToDelete
+    const index = drivers.value.findIndex(d => d.id === driver.id)
+    if (index > -1) {
+        drivers.value.splice(index, 1)
+        showToast('success', 'Driver deleted', `${driver.name} has been removed`)
     }
+    deleteModal.value.show = false
+    deleteModal.value.driverToDelete = null
+}
+
+const cancelDelete = () => {
+    deleteModal.value.show = false
+    deleteModal.value.driverToDelete = null
 }
 
 onMounted(() => {

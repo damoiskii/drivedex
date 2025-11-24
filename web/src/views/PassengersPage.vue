@@ -156,10 +156,7 @@
                             class="hover:bg-gray-50 transition-colors">
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
-                                    <div
-                                        class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 font-semibold">
-                                        {{ passenger.name.charAt(0) }}
-                                    </div>
+                                    <UserAvatar :name="passenger.name" size="md" color="purple" />
                                     <div class="ml-4">
                                         <div class="text-sm font-medium text-gray-900">{{ passenger.name }}</div>
                                         <div class="text-sm text-gray-500">ID: {{ passenger.id }}</div>
@@ -224,6 +221,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import Toast from '../components/Toast.vue'
+import UserAvatar from '../components/UserAvatar.vue'
 
 const searchQuery = ref('')
 const loading = ref(false)
