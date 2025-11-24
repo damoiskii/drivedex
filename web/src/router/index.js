@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import AppLayout from '../components/AppLayout.vue'
 import DashboardPage from '../views/DashboardPage.vue'
-import EmployeesPage from '../views/EmployeesPage.vue'
 import DriversPage from '../views/DriversPage.vue'
 import PassengersPage from '../views/PassengersPage.vue'
 import RolesPage from '../views/RolesPage.vue'
@@ -27,11 +26,6 @@ const router = createRouter({
           path: 'dashboard',
           name: 'dashboard',
           component: DashboardPage,
-        },
-        {
-          path: 'employees',
-          name: 'employees',
-          component: EmployeesPage,
         },
         {
           path: 'drivers',

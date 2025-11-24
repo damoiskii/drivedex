@@ -8,6 +8,10 @@
         <DeleteModal :show="deleteModal.show" :title="deleteModal.title" :message="deleteModal.message"
             :itemName="deleteModal.itemName" @confirm="confirmDelete" @cancel="cancelDelete" />
 
+        <!-- Driver View Modal -->
+        <DriverViewModal :show="viewModal.show" :driver="viewModal.driver"
+            @close="closeViewModal" @edit="editFromView" />
+
         <!-- Driver Form Modal -->
         <DriverFormModal :show="driverModal.show" :driver="driverModal.driver"
             @submit="handleDriverSubmit" @cancel="cancelDriverModal" />
@@ -223,6 +227,7 @@
 import { ref, computed, onMounted } from 'vue'
 import Toast from '../components/Toast.vue'
 import DeleteModal from '../components/DeleteModal.vue'
+import DriverViewModal from '../components/DriverViewModal.vue'
 import DriverFormModal from '../components/DriverFormModal.vue'
 import UserAvatar from '../components/UserAvatar.vue'
 
@@ -244,6 +249,11 @@ const deleteModal = ref({
 })
 
 const driverModal = ref({
+    show: false,
+    driver: null
+})
+
+const viewModal = ref({
     show: false,
     driver: null
 })
@@ -333,7 +343,20 @@ const openAddModal = () => {
 }
 
 const viewDriver = (driver) => {
-    showToast('info', 'View Driver', `Viewing details for ${driver.name}`)
+    viewModal.value.show = true
+    viewModal.value.driver = driver
+}
+
+const closeViewModal = () => {
+    viewModal.value.show = false
+    viewModal.value.driver = null
+}
+
+const editFromView = (driver) => {
+    viewModal.value.show = false
+    viewModal.value.driver = null
+    driverModal.value.show = true
+    driverModal.value.driver = driver
 }
 
 const editDriver = (driver) => {

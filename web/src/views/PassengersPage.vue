@@ -4,6 +4,10 @@
         <Toast :show="toast.show" :type="toast.type" :message="toast.message" :description="toast.description"
             @close="toast.show = false" />
 
+        <!-- Passenger View Modal -->
+        <PassengerViewModal :show="viewModal.show" :passenger="viewModal.passenger"
+            @close="closeViewModal" @edit="editFromView" />
+
         <!-- Passenger Form Modal -->
         <PassengerFormModal :show="passengerModal.show" :passenger="passengerModal.passenger"
             @submit="handlePassengerSubmit" @cancel="cancelPassengerModal" />
@@ -233,6 +237,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import Toast from '../components/Toast.vue'
+import PassengerViewModal from '../components/PassengerViewModal.vue'
 import PassengerFormModal from '../components/PassengerFormModal.vue'
 import UserAvatar from '../components/UserAvatar.vue'
 
@@ -246,6 +251,11 @@ const toast = ref({
 })
 
 const passengerModal = ref({
+    show: false,
+    passenger: null
+})
+
+const viewModal = ref({
     show: false,
     passenger: null
 })
@@ -334,7 +344,20 @@ const openAddModal = () => {
 }
 
 const viewPassenger = (passenger) => {
-    showToast('info', 'View Passenger', `Viewing details for ${passenger.name}`)
+    viewModal.value.show = true
+    viewModal.value.passenger = passenger
+}
+
+const closeViewModal = () => {
+    viewModal.value.show = false
+    viewModal.value.passenger = null
+}
+
+const editFromView = (passenger) => {
+    viewModal.value.show = false
+    viewModal.value.passenger = null
+    passengerModal.value.show = true
+    passengerModal.value.passenger = passenger
 }
 
 const editPassenger = (passenger) => {

@@ -8,6 +8,9 @@
         <DeleteModal :show="deleteModal.show" :title="deleteModal.title" :message="deleteModal.message"
             :itemName="deleteModal.itemName" @confirm="confirmDelete" @cancel="cancelDelete" />
 
+        <!-- Route View Modal -->
+        <RouteViewModal :show="viewModal.show" :route="viewModal.route" @close="closeViewModal" @edit="editFromView" />
+
         <!-- Header -->
         <div class="mb-6">
             <h1 class="text-3xl font-bold text-gray-800">Routes</h1>
@@ -226,6 +229,7 @@
 import { ref, computed, onMounted } from 'vue'
 import Toast from '../components/Toast.vue'
 import DeleteModal from '../components/DeleteModal.vue'
+import RouteViewModal from '../components/RouteViewModal.vue'
 
 const searchQuery = ref('')
 const loading = ref(false)
@@ -234,6 +238,11 @@ const toast = ref({
     type: 'info',
     message: '',
     description: ''
+})
+
+const viewModal = ref({
+    show: false,
+    route: null
 })
 
 const deleteModal = ref({
@@ -339,7 +348,18 @@ const openAddModal = () => {
 }
 
 const viewRoute = (route) => {
-    showToast('info', 'View Route', `Viewing details for ${route.name}`)
+    viewModal.value.show = true
+    viewModal.value.route = route
+}
+
+const closeViewModal = () => {
+    viewModal.value.show = false
+    viewModal.value.route = null
+}
+
+const editFromView = (route) => {
+    closeViewModal()
+    editRoute(route)
 }
 
 const editRoute = (route) => {
