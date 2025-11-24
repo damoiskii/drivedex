@@ -8,6 +8,10 @@
         <DeleteModal :show="deleteModal.show" :title="deleteModal.title" :message="deleteModal.message"
             :itemName="deleteModal.itemName" @confirm="confirmDelete" @cancel="cancelDelete" />
 
+        <!-- Employee Form Modal -->
+        <EmployeeFormModal :show="employeeModal.show" :employee="employeeModal.employee"
+            :departments="departments" @submit="handleEmployeeSubmit" @cancel="cancelEmployeeModal" />
+
         <!-- Header -->
         <div class="mb-6">
             <h1 class="text-3xl font-bold text-gray-800">Employees</h1>
@@ -214,6 +218,7 @@
 import { ref, computed, onMounted } from 'vue'
 import Toast from '../components/Toast.vue'
 import DeleteModal from '../components/DeleteModal.vue'
+import EmployeeFormModal from '../components/EmployeeFormModal.vue'
 import UserAvatar from '../components/UserAvatar.vue'
 
 const searchQuery = ref('')
@@ -231,6 +236,11 @@ const deleteModal = ref({
     message: 'Are you sure you want to delete this employee? This will remove all their associated data and access to the system.',
     itemName: '',
     employeeToDelete: null
+})
+
+const employeeModal = ref({
+    show: false,
+    employee: null
 })
 
 const employees = ref([
@@ -305,11 +315,39 @@ const loadEmployees = () => {
 }
 
 const openAddModal = () => {
-    showToast('info', 'Add Employee', 'This feature will be implemented soon')
+    employeeModal.value.show = true
+    employeeModal.value.employee = null
 }
 
 const editEmployee = (employee) => {
-    showToast('info', 'Edit Employee', `Editing ${employee.name}`)
+    employeeModal.value.show = true
+    employeeModal.value.employee = employee
+}
+
+const handleEmployeeSubmit = (employeeData) => {
+    if (employeeModal.value.employee) {
+        // Edit existing employee
+        const index = employees.value.findIndex(e => e.id === employeeModal.value.employee.id)
+        if (index > -1) {
+            employees.value[index] = { ...employees.value[index], ...employeeData }
+            showToast('success', 'Employee updated', `${employeeData.name} has been updated successfully`)
+        }
+    } else {
+        // Add new employee
+        const newEmployee = {
+            id: `EMP${String(employees.value.length + 1).padStart(3, '0')}`,
+            ...employeeData
+        }
+        employees.value.push(newEmployee)
+        showToast('success', 'Employee added', `${employeeData.name} has been added successfully. Password: ${employeeData.password}`)
+    }
+    employeeModal.value.show = false
+    employeeModal.value.employee = null
+}
+
+const cancelEmployeeModal = () => {
+    employeeModal.value.show = false
+    employeeModal.value.employee = null
 }
 
 const deleteEmployee = (employee) => {

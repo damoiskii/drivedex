@@ -4,6 +4,10 @@
         <Toast :show="toast.show" :type="toast.type" :message="toast.message" :description="toast.description"
             @close="toast.show = false" />
 
+        <!-- Passenger Form Modal -->
+        <PassengerFormModal :show="passengerModal.show" :passenger="passengerModal.passenger"
+            @submit="handlePassengerSubmit" @cancel="cancelPassengerModal" />
+
         <!-- Header -->
         <div class="mb-6">
             <h1 class="text-3xl font-bold text-gray-800">Passengers</h1>
@@ -40,6 +44,14 @@
                                 d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
                         Export
+                    </button>
+                    <button @click="openAddModal"
+                        class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 4v16m8-8H4" />
+                        </svg>
+                        Add Passenger
                     </button>
                 </div>
             </div>
@@ -149,17 +161,17 @@
                                         d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                                 </svg>
                                 <p class="text-lg font-semibold">No passengers found</p>
-                                <p class="text-sm mt-1">No matching passengers in the system</p>
+                                <p class="text-sm mt-1">Get started by adding your first passenger</p>
                             </td>
                         </tr>
                         <tr v-else v-for="passenger in filteredPassengers" :key="passenger.id"
                             class="hover:bg-gray-50 transition-colors">
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
-                                    <UserAvatar :name="passenger.name" size="md" color="purple" />
+                                    <UserAvatar :name="passenger.name" size="md" color="indigo" />
                                     <div class="ml-4">
                                         <div class="text-sm font-medium text-gray-900">{{ passenger.name }}</div>
-                                        <div class="text-sm text-gray-500">ID: {{ passenger.id }}</div>
+                                        <div class="text-sm text-gray-500">{{ passenger.email }}</div>
                                     </div>
                                 </div>
                             </td>
@@ -221,6 +233,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import Toast from '../components/Toast.vue'
+import PassengerFormModal from '../components/PassengerFormModal.vue'
 import UserAvatar from '../components/UserAvatar.vue'
 
 const searchQuery = ref('')
@@ -230,6 +243,11 @@ const toast = ref({
     type: 'info',
     message: '',
     description: ''
+})
+
+const passengerModal = ref({
+    show: false,
+    passenger: null
 })
 
 const passengers = ref([
@@ -310,12 +328,44 @@ const exportPassengers = () => {
     showToast('success', 'Exporting data', 'Passenger data is being exported to CSV')
 }
 
+const openAddModal = () => {
+    passengerModal.value.show = true
+    passengerModal.value.passenger = null
+}
+
 const viewPassenger = (passenger) => {
     showToast('info', 'View Passenger', `Viewing details for ${passenger.name}`)
 }
 
 const editPassenger = (passenger) => {
-    showToast('info', 'Edit Passenger', `Editing ${passenger.name}`)
+    passengerModal.value.show = true
+    passengerModal.value.passenger = passenger
+}
+
+const handlePassengerSubmit = (passengerData) => {
+    if (passengerModal.value.passenger) {
+        // Edit existing passenger
+        const index = passengers.value.findIndex(p => p.id === passengerModal.value.passenger.id)
+        if (index > -1) {
+            passengers.value[index] = { ...passengers.value[index], ...passengerData }
+            showToast('success', 'Passenger updated', `${passengerData.name} has been updated successfully`)
+        }
+    } else {
+        // Add new passenger
+        const newPassenger = {
+            id: `PAS${String(passengers.value.length + 1).padStart(3, '0')}`,
+            ...passengerData
+        }
+        passengers.value.push(newPassenger)
+        showToast('success', 'Passenger added', `${passengerData.name} has been added successfully. Password: ${passengerData.password}`)
+    }
+    passengerModal.value.show = false
+    passengerModal.value.passenger = null
+}
+
+const cancelPassengerModal = () => {
+    passengerModal.value.show = false
+    passengerModal.value.passenger = null
 }
 
 onMounted(() => {

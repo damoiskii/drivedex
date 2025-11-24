@@ -8,6 +8,10 @@
         <DeleteModal :show="deleteModal.show" :title="deleteModal.title" :message="deleteModal.message"
             :itemName="deleteModal.itemName" @confirm="confirmDelete" @cancel="cancelDelete" />
 
+        <!-- Driver Form Modal -->
+        <DriverFormModal :show="driverModal.show" :driver="driverModal.driver"
+            @submit="handleDriverSubmit" @cancel="cancelDriverModal" />
+
         <!-- Header -->
         <div class="mb-6">
             <h1 class="text-3xl font-bold text-gray-800">Drivers</h1>
@@ -219,6 +223,7 @@
 import { ref, computed, onMounted } from 'vue'
 import Toast from '../components/Toast.vue'
 import DeleteModal from '../components/DeleteModal.vue'
+import DriverFormModal from '../components/DriverFormModal.vue'
 import UserAvatar from '../components/UserAvatar.vue'
 
 const searchQuery = ref('')
@@ -236,6 +241,11 @@ const deleteModal = ref({
     message: 'Are you sure you want to delete this driver? This will remove their profile and unassign them from any buses.',
     itemName: '',
     driverToDelete: null
+})
+
+const driverModal = ref({
+    show: false,
+    driver: null
 })
 
 const drivers = ref([
@@ -318,7 +328,8 @@ const loadDrivers = () => {
 }
 
 const openAddModal = () => {
-    showToast('info', 'Add Driver', 'This feature will be implemented soon')
+    driverModal.value.show = true
+    driverModal.value.driver = null
 }
 
 const viewDriver = (driver) => {
@@ -326,7 +337,34 @@ const viewDriver = (driver) => {
 }
 
 const editDriver = (driver) => {
-    showToast('info', 'Edit Driver', `Editing ${driver.name}`)
+    driverModal.value.show = true
+    driverModal.value.driver = driver
+}
+
+const handleDriverSubmit = (driverData) => {
+    if (driverModal.value.driver) {
+        // Edit existing driver
+        const index = drivers.value.findIndex(d => d.id === driverModal.value.driver.id)
+        if (index > -1) {
+            drivers.value[index] = { ...drivers.value[index], ...driverData }
+            showToast('success', 'Driver updated', `${driverData.name} has been updated successfully`)
+        }
+    } else {
+        // Add new driver
+        const newDriver = {
+            id: `DRV${String(drivers.value.length + 1).padStart(3, '0')}`,
+            ...driverData
+        }
+        drivers.value.push(newDriver)
+        showToast('success', 'Driver added', `${driverData.name} has been added successfully. Password: ${driverData.password}`)
+    }
+    driverModal.value.show = false
+    driverModal.value.driver = null
+}
+
+const cancelDriverModal = () => {
+    driverModal.value.show = false
+    driverModal.value.driver = null
 }
 
 const deleteDriver = (driver) => {
